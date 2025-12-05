@@ -1,2 +1,4 @@
 
 .env
+.app.config.js
+.gitignore
