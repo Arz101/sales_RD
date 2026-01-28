@@ -2,3 +2,6 @@
 .env
 .app.config.js
 .gitignore
+.venvs
+__pycache__/
+*.py[cod]

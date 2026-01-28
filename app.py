@@ -152,8 +152,8 @@ class Sync:
     def store_open(self):
         from datetime import time
         now = datetime.now().time()
-        openAt = time(7,0,0)
-        closeAt = time(22,0,0)
+        openAt = time(6,0,0)
+        closeAt = time(23,0,0)
         return openAt <= now <= closeAt
 
 

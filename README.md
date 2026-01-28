@@ -1,6 +1,6 @@
 # sales_RD
 
-Backend API para gestión de ventas (Sales RD).  
+= Gestión de ventas (Sales RD).  
 Aplicación desarrollada en Python para manejar operaciones de ventas, conectándose a una base de datos y permitiendo consultar y actualizar información desde clientes u otros servicios.
 
 ---
@@ -9,7 +9,7 @@ Aplicación desarrollada en Python para manejar operaciones de ventas, conectán
 
 - Conexión a base de datos mediante `conn.py`  
 - Manejo básico de rutas y lógica en `app.py`  
-- Dependencias listadas en `reque.txt`
+- Dependencias listadas en `req.txt`
 
 ---
 

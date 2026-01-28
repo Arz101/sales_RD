@@ -46,13 +46,51 @@ def get_database_remote():
     except SQLAlchemyError as e:
         print("Error connecting to database: ", e)
         return None
+    
+def get_database_local():
+    server = os.getenv('LOCAL_HOST')
+    database = os.getenv('LOCAL_DB')
+    username =  os.getenv('LOCAL_USER')
+    password = os.getenv('LOCAL_PASSWORD')
+
+    params = urllib.parse.quote_plus(
+        f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+        f"SERVER={server};"
+        f"DATABASE={database};"
+        f"UID={username};"
+        f"PWD={password};"
+        "Encrypt=no;"
+        "TrustServerCertificate=yes;"
+        "Connection Timeout=30;"
+    )
+
+    try:
+        return create_engine_connection(f"mssql+pyodbc:///?odbc_connect={params}")
+
+    except SQLAlchemyError as e:
+        print("Error connecting to database: ", e)
+        return None
+    
+def try_connection(connection):
+    try:
+        with connection as conn:
+            result = conn.execute(text("SELECT GETDATE();")).scalar()
+            print(result)
+        return True
+    except SQLAlchemyError as e:
+        print(e)
+
+def main():
+    remote_conn = get_database_remote()
+    local_conn = get_database_local()
+    if try_connection(remote_conn) and try_connection(local_conn):
+        print("Successfully!")
+
+    else:
+        print("Error connecting to database")
+        raise SQLAlchemyError
+    
+    return remote_conn, local_conn
 
 if __name__ == "__main__":
-    remote_conn = get_database_remote()
-    if remote_conn:
-        with remote_conn as conn:
-            result = remote_conn.execute(text("SELECT GETDATE();")).scalar()
-            print(result)
-        print("Remote database connection established.")
-    else:
-        print("Failed to establish remote database connection.")
+    main()
